@@ -37,3 +37,9 @@ with open(fpath, "w") as f:
 import sienna
 data = sienna.save(data, fpath)
 ```
+
+
+## Hidden Usage
+
+Even though sienna is initially created to read jsonl files, from version 0.1.4, you can also read/write json and text files.
+For text file, sienna handles as new-line separated line of strings.
