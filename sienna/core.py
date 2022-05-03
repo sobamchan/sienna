@@ -6,7 +6,7 @@ def __get_file_type(fpath: str) -> str:
     if fpath.endswith(".jsonl"):
         return "jsonl"
     elif fpath.endswith(".json"):
-        return "jsonl"
+        return "json"
     else:
         return "text"
 
