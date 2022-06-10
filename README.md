@@ -38,8 +38,12 @@ import sienna
 data = sienna.save(data, fpath)
 ```
 
+## Other file types
 
-## Hidden Usage
+Now sienna supports following file types,
 
-Even though sienna is initially created to read jsonl files, from version 0.1.4, you can also read/write json and text files.
-For text file, sienna handles as new-line separated line of strings.
+- jsonline files (`hoge.jsonl`),
+- json files (`hoge.json`),
+- `\n` separated text files (`hoge.[anything but not jsonl and json]`).
+
+sienna checks file extension and read differently.
