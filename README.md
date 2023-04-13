@@ -38,6 +38,19 @@ import sienna
 data = sienna.save(data, fpath)
 ```
 
+Adding.
+
+```py
+# BEFORE
+import json
+with open(fpath, "a") as f:
+    f.write("\n".join([json.dumps(d) for d in data]))
+
+# With sienna
+import sienna
+data = sienna.add(data, fpath)
+```
+
 ## Other file types
 
 Now sienna supports following file types,
