@@ -36,3 +36,13 @@ def save(data: Union[List, Dict], fpath: str) -> None:
     else:
         with open(fpath, "w") as f:
             f.write("\n".join(data))
+
+
+def add(data: Dict, fpath: str):
+    assert isinstance(data, dict), "Currently, only adding dict data to jsonl file is supported."
+    assert fpath.endswith(".jsonl"), "Currently, only adding dict data to jsonl file is supported."
+
+    with open(fpath, "a") as f:
+        f.write("\n")
+        f.write(json.dumps(data))
+    pass
