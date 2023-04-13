@@ -1,4 +1,5 @@
 import json
+import os
 from typing import Dict, List, Union
 
 
@@ -39,8 +40,20 @@ def save(data: Union[List, Dict], fpath: str) -> None:
 
 
 def add(data: Dict, fpath: str):
-    assert isinstance(data, dict), "Currently, only adding dict data to jsonl file is supported."
-    assert fpath.endswith(".jsonl"), "Currently, only adding dict data to jsonl file is supported."
+    assert isinstance(
+        data, dict
+    ), "Currently, only adding dict data to jsonl file is supported."
+    assert fpath.endswith(
+        ".jsonl"
+    ), "Currently, only adding dict data to jsonl file is supported."
+
+    exists = os.path.exists(fpath)
 
     with open(fpath, "a") as f:
+
+        if exists:
+            f.write("\n")
+        else:
+            print(f"Creating {fpath}")
+
         f.write(json.dumps(data))
