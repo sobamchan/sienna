@@ -43,6 +43,4 @@ def add(data: Dict, fpath: str):
     assert fpath.endswith(".jsonl"), "Currently, only adding dict data to jsonl file is supported."
 
     with open(fpath, "a") as f:
-        f.write("\n")
         f.write(json.dumps(data))
-    pass
