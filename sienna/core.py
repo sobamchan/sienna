@@ -12,7 +12,7 @@ def __get_file_type(fpath: str) -> str:
         return "text"
 
 
-def load(fpath: str) -> Union[List, Dict]:
+def load(fpath: str) -> Union[List[str], Dict]:
     ftype = __get_file_type(fpath)
     if ftype == "jsonl":
         with open(fpath, "r") as f:
@@ -26,7 +26,7 @@ def load(fpath: str) -> Union[List, Dict]:
     return data
 
 
-def save(data: Union[List, Dict], fpath: str) -> None:
+def save(data: Union[List[str], Dict], fpath: str) -> None:
     ftype = __get_file_type(fpath)
     if ftype == "jsonl":
         with open(fpath, "w") as f:
