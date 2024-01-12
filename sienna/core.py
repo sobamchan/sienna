@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
 
 
 def __get_file_type(fpath: str) -> str:
@@ -26,14 +26,16 @@ def load(fpath: str) -> Union[List[str], Dict]:
     return data
 
 
-def save(data: Union[List[Any], Dict], fpath: str) -> None:
+def save(
+    data: Union[List[Any], Dict], fpath: str, indent: Optional[int] = None
+) -> None:
     ftype = __get_file_type(fpath)
     if ftype == "jsonl":
         with open(fpath, "w") as f:
             f.write("\n".join([json.dumps(d) for d in data]))
     elif ftype == "json":
         with open(fpath, "w") as f:
-            json.dump(data, f)
+            json.dump(data, f, indent=indent)
     else:
         with open(fpath, "w") as f:
             f.write("\n".join(data))
