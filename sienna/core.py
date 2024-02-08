@@ -1,4 +1,4 @@
-import json
+import orjson
 import os
 from typing import Any, Dict, List, Optional, Union
 
@@ -15,11 +15,11 @@ def __get_file_type(fpath: str) -> str:
 def load(fpath: str) -> Union[List[str], Dict]:
     ftype = __get_file_type(fpath)
     if ftype == "jsonl":
-        with open(fpath, "r") as f:
-            data = [json.loads(line) for line in f.readlines()]
+        with open(fpath, "rb") as f:
+            data = [orjson.loads(line) for line in f.readlines()]
     elif ftype == "json":
-        with open(fpath, "r") as f:
-            data = json.load(f)
+        with open(fpath, "rb") as f:
+            data = orjson.loads(f.read())
     else:
         with open(fpath, "r") as f:
             data = [line.strip() for line in f.readlines()]
@@ -30,12 +30,14 @@ def save(
     data: Union[List[Any], Dict], fpath: str, indent: Optional[int] = None
 ) -> None:
     ftype = __get_file_type(fpath)
+    indent = orjson.OPT_INDENT_2 if indent == 2 else None
     if ftype == "jsonl":
-        with open(fpath, "w") as f:
-            f.write("\n".join([json.dumps(d) for d in data]))
+        with open(fpath, "wb") as f:
+            for d in data:
+                f.write(orjson.dumps(d, option=orjson.OPT_APPEND_NEWLINE))
     elif ftype == "json":
-        with open(fpath, "w") as f:
-            json.dump(data, f, indent=indent)
+        with open(fpath, "wb") as f:
+            f.write(orjson.dumps(data, option=indent))
     else:
         with open(fpath, "w") as f:
             f.write("\n".join(data))
@@ -51,11 +53,9 @@ def add(data: Dict, fpath: str):
 
     exists = os.path.exists(fpath)
 
-    with open(fpath, "a") as f:
+    with open(fpath, "ab") as f:
 
-        if exists:
-            f.write("\n")
-        else:
+        if not exists:
             print(f"Creating {fpath}")
 
-        f.write(json.dumps(data))
+        f.write(orjson.dumps(data))
