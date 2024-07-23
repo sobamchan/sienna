@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 
@@ -12,7 +13,9 @@ def __get_file_type(fpath: str) -> str:
         return "text"
 
 
-def load(fpath: str) -> Union[List[str], Dict]:
+def load(fpath: str | Path) -> Union[List[str], Dict]:
+    fpath = str(fpath)
+
     ftype = __get_file_type(fpath)
     if ftype == "jsonl":
         with open(fpath, "r") as f:
@@ -27,8 +30,10 @@ def load(fpath: str) -> Union[List[str], Dict]:
 
 
 def save(
-    data: Union[List[Any], Dict], fpath: str, indent: Optional[int] = None
+    data: Union[List[Any], Dict], fpath: str | Path, indent: Optional[int] = None
 ) -> None:
+    fpath = str(fpath)
+
     ftype = __get_file_type(fpath)
     if ftype == "jsonl":
         with open(fpath, "w") as f:
@@ -41,7 +46,9 @@ def save(
             f.write("\n".join(data))
 
 
-def add(data: Dict, fpath: str):
+def add(data: Dict, fpath: str | Path):
+    fpath = str(fpath)
+
     assert isinstance(
         data, dict
     ), "Currently, only adding dict data to jsonl file is supported."
